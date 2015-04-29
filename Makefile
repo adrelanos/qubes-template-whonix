@@ -21,6 +21,7 @@
 
 _self := $(strip $(lastword 1,$(subst /, ,$(dir $(lastword $(MAKEFILE_LIST))))))
 -include $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf
+$(info ====> $(WHONIX_COMPONENTS))
 
 all:
 	@true
