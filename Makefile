@@ -21,6 +21,9 @@
 
 _self := $(strip $(lastword 1,$(subst /, ,$(dir $(lastword $(MAKEFILE_LIST))))))
 $(info self: ====> $(WHONIX_COMPONENTS))
+$(info self1: ====> $(lastword $(MAKEFILE_LIST)))
+$(info self2: ====> $(dir $(lastword $(MAKEFILE_LIST))))
+$(info self4: ====> $(shell readlink -m $(dir $(abspath $(lastword $(MAKEFILE_LIST))))))
 $(info conf: ====> $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf)
 
 -include $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf
