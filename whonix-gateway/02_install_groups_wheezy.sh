@@ -53,7 +53,6 @@ sudo ~/Whonix/whonix_build \
     --build $1 \
     --64bit-linux \
     --current-sources \
-    --whonix-apt-repository-distribution $2 \
     --install-to-root \
     --skip-verifiable \
     --minimal-report \
@@ -61,6 +60,7 @@ sudo ~/Whonix/whonix_build \
 popd
 EOF
 
+#    --whonix-apt-repository-distribution $2 \
 #    --enable-whonix-apt-repository \
 
 
