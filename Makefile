@@ -19,14 +19,17 @@
 #
 #
 
-_self := $(strip $(lastword 1,$(subst /, ,$(dir $(lastword $(MAKEFILE_LIST))))))
+#_self := $(strip $(lastword 1,$(subst /, ,$(dir $(lastword $(MAKEFILE_LIST))))))
+_self_path := $(shell readlink -m $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+_self_name := $(strip $(lastword 1,$(subst /, ,$(_self_path))))
+
 $(info self: ====> $(WHONIX_COMPONENTS))
-$(info self1: ====> $(lastword $(MAKEFILE_LIST)))
-$(info self2: ====> $(dir $(lastword $(MAKEFILE_LIST))))
-$(info self4: ====> $(shell readlink -m $(dir $(abspath $(lastword $(MAKEFILE_LIST))))))
+$(info self1: ====> $(_self_path))
+$(info self2: ====> $(_self_name))
+$(info self3: ====> $(shell readlink -m $(dir $(abspath $(lastword $(MAKEFILE_LIST))))))
 $(info conf: ====> $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf)
 
--include $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf
+-include $(_self_path)/components.conf
 $(info WHONIX_COMPONENTS: ====> $(WHONIX_COMPONENTS))
 
 all:
