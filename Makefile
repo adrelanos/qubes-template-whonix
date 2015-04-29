@@ -23,7 +23,7 @@ _self := $(strip $(lastword 1,$(subst /, ,$(dir $(lastword $(MAKEFILE_LIST))))))
 $(info self: ====> $(WHONIX_COMPONENTS))
 $(info conf: ====> $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf)
 
-include $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf
+-include $(BUILDER_DIR)/$(SRC_DIR)/$(_self)/components.conf
 $(info WHONIX_COMPONENTS: ====> $(WHONIX_COMPONENTS))
 
 all:
