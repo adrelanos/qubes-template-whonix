@@ -1,7 +1,5 @@
 #!/bin/bash -e
-# vim: set ts=4 sw=4 sts=4 et :
 
-#
 # The Qubes OS Project, http://www.qubes-os.org
 #
 # Copyright (C) 2012 - 2025 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
