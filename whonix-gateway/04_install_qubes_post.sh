@@ -26,6 +26,9 @@ if [ "$DEBUG" == "1" ]; then
     set -x
 fi
 
+dkms_suppress_snippet_code='sign_file="/nonexistent"'
+target_dkms_suppress_mok_snippet='/etc/dkms/framework.conf.d/90-derivative-maker-build.conf'
+
 #
 # Handle legacy builder
 #
@@ -60,6 +63,13 @@ trap cleanup EXIT
 prepareChroot
 
 mount --bind /dev "${INSTALL_DIR}/dev"
+
+## Remove DKMS MOK files if they already exist at this point
+rm --force -- /var/lib/dkms/mok.key
+rm --force -- /var/lib/dkms/mok.pub
+
+## Prevent DKMS MOK files from being generated during the build
+printf '%s\n' "${dkms_suppress_snippet_code}" > "${target_dkms_suppress_mok_snippet}"
 
 aptInstall apt-transport-https
 aptInstall apt-transport-tor
@@ -197,6 +207,9 @@ UWT_DEV_PASSTHROUGH="1" DEBIAN_FRONTEND="noninteractive" DEBIAN_PRIORITY="critic
 chroot_cmd systemctl enable repository-dist-initializer.service
 mkdir -p "${INSTALL_DIR}/var/lib/repository-dist"
 echo "${DERIVATIVE_APT_REPOSITORY_OPTS}" > "${INSTALL_DIR}/var/lib/repository-dist/derivative_apt_repository_opts"
+
+## Stop preventing generation of DKMS MOK keys
+rm --force -- "${target_dkms_suppress_mok_snippet}"
 
 ## Cleanup.
 umount_all "${INSTALL_DIR}/" || true
