@@ -27,7 +27,8 @@ if [ "$DEBUG" == "1" ]; then
 fi
 
 dkms_suppress_snippet_code='sign_file="/nonexistent"'
-target_dkms_suppress_mok_snippet='/etc/dkms/framework.conf.d/90-derivative-maker-build.conf'
+dkms_config_dir='/etc/dkms/framework.conf.d'
+target_dkms_suppress_mok_snippet="${dkms_config_dir}/90-derivative-maker-build.conf"
 
 #
 # Handle legacy builder
@@ -69,6 +70,7 @@ rm --force -- /var/lib/dkms/mok.key
 rm --force -- /var/lib/dkms/mok.pub
 
 ## Prevent DKMS MOK files from being generated during the build
+mkdir --parents -- "${dkms_config_dir}"
 printf '%s\n' "${dkms_suppress_snippet_code}" > "${target_dkms_suppress_mok_snippet}"
 
 aptInstall apt-transport-https
